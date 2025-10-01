@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Domain\ValueObjects\" />
-    <Folder Include="Queries\" />
   </ItemGroup>
 
   <ItemGroup>
