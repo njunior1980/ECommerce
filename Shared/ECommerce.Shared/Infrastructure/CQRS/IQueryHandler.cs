@@ -2,5 +2,5 @@
 
 public interface IQueryHandler<in TQuery, TResult> where TQuery : IQuery<TResult>
 {
-    Task<TResult> Handle(TQuery query, CancellationToken ct = default);
+    Task<TResult> Handle(TQuery command, CancellationToken ct = default);
 }

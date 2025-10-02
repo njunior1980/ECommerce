@@ -7,15 +7,15 @@ using Microsoft.AspNetCore.Routing;
 
 namespace ECommerce.Customers.Endpoints;
 
-public class AddCustomer : IEndpoint
+public class CreateCustomer : IEndpoint
 {
     internal record Request(string Name, string Email);
 
     public void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        builder.MapPost("/customers", async (Request request, IDispatcher dispatcher) =>
+        builder.MapPost(Constants.ApiRoute.Create, async (Request request, IDispatcher dispatcher) =>
         {
-            var command = new AddCustomerCommand(request.Name, request.Email);
+            var command = new CreateCustomerCommand(request.Name, request.Email);
             
             var result = await dispatcher.Send(command);
 
@@ -23,8 +23,8 @@ public class AddCustomer : IEndpoint
                 ? Results.Ok(result.Value)
                 : Results.BadRequest(result.Error);
         })
-        .WithTags("Customers")
-        .WithName("AddCustomerCommand")
+        .WithTags(Constants.Tag)
+        .WithName(nameof(CreateCustomer))
         .WithDisplayName("Add a new customer")
         .Produces(200)
         .Produces(400);

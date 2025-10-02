@@ -12,6 +12,20 @@ public class Customer : EntityBase
     public Address ShipTo { get; set; }
     public IList<Provider> Providers { get; set; } = new List<Provider>();
 
+    public void Create(string name, string email)
+    {
+        Name = name;
+        Email = email;
+        CreatedAt = DateTime.UtcNow;
+    }
+
+    public void Update(string name, string email)
+    {
+        Name = name;
+        Email = email;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
     public void AddOrUpdateAddress(Address address)
     {
         ShipTo = address;

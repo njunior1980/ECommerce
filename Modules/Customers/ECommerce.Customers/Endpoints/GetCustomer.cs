@@ -1,5 +1,4 @@
-﻿using ECommerce.Customers.Domain.ValueObjects;
-using ECommerce.Customers.Queries;
+﻿using ECommerce.Customers.Queries;
 using ECommerce.Shared.Core.Endpoints;
 using ECommerce.Shared.Infrastructure.CQRS;
 using Microsoft.AspNetCore.Builder;
@@ -12,7 +11,7 @@ public class GetCustomer : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/customers/{id}", async (string id, IDispatcher dispatcher) =>
+        builder.MapGet(Constants.ApiRoute.Get, async (string id, IDispatcher dispatcher) =>
         {
             var result = await dispatcher.Send(new GetCustomerQuery(id));
 
@@ -21,8 +20,8 @@ public class GetCustomer : IEndpoint
                 : Results.Ok(result.Value);
 
         })
-        .WithTags("Customers")
-        .WithName("GetCustomerQuery")
+        .WithTags(Constants.Tag)
+        .WithName(nameof(GetCustomer))
         .WithDisplayName("Get a customer by ID")
         .Produces(200)
         .Produces(404);
