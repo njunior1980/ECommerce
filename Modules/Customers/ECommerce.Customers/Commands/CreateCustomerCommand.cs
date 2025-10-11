@@ -2,20 +2,10 @@
 using ECommerce.Shared.Core.Base;
 using ECommerce.Shared.Infrastructure.CQRS;
 using ECommerce.Shared.Infrastructure.RavenDB;
-using FluentValidation;
 
 namespace ECommerce.Customers.Commands;
 
 internal record CreateCustomerCommand(string Name, string Email) : IQuery<Result<string>>;
-
-internal class AddCustomerValidation : AbstractValidator<CreateCustomerCommand>
-{
-    public AddCustomerValidation()
-    {
-        RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required.");
-        RuleFor(x => x.Email).NotEmpty().EmailAddress().WithMessage("A valid email is required.");
-    }
-}
 
 internal class AddCustomerHandler(IRavenDocumentStoreHolder storeHolder) : IQueryHandler<CreateCustomerCommand, Result<string>>
 {

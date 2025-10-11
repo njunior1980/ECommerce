@@ -13,17 +13,29 @@ public class GetCustomer : IEndpoint
     {
         builder.MapGet(Constants.ApiRoute.Get, async (string id, IDispatcher dispatcher) =>
         {
-            var result = await dispatcher.Send(new GetCustomerQuery(id));
+            try
+            {
+                var result = await dispatcher.Send(new GetCustomerQuery(id));
 
-            return result.IsSuccess
-                ? Results.NotFound(result.ErrorMessage)
-                : Results.Ok(result.Value);
+                return result.IsSuccess
+                    ? Results.NotFound(result.ErrorMessage)
+                    : Results.Ok(result.Value);
 
+            }
+            catch (Exception e)
+            {
+               return Results.InternalServerError(e.Message);
+            }
         })
-        .WithTags(Constants.Tag)
-        .WithName(nameof(GetCustomer))
-        .WithDisplayName("Get a customer by ID")
-        .Produces(200)
-        .Produces(404);
+        .SetEndpointConfiguration(
+            summary: "Get customer by ID",
+            description: "Retrieves a customer by their unique identifier.",
+            operationId: nameof(GetCustomer),
+            apiTag: [Constants.Tag],
+            produces: [
+                StatusCodes.Status200OK,
+                StatusCodes.Status404NotFound,
+                StatusCodes.Status500InternalServerError
+            ]);
     }    
 }

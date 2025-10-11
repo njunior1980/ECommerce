@@ -14,4 +14,7 @@ public record Error(string Code, string Description, ErrorType Type)
 
     public static Error Exception(string code, string description) =>
         new(code, description, ErrorType.Exception);
+
+    public static Error Exception(string description) =>
+        new("Exception", description, ErrorType.Exception);
 }

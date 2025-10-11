@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace ECommerce.Shared.Core.Endpoints.Filters;
+namespace ECommerce.Shared.Core.Endpoints;
 
 public class RequestValidationFilter<TRequest>(ILogger<RequestValidationFilter<TRequest>> logger, IValidator<TRequest> validator) : IEndpointFilter
 {
