@@ -1,4 +1,4 @@
-﻿namespace ECommerce.Customers.Domain.ValueObjects;
+﻿namespace ECommerce.Orders.Domain.ValueObjects;
 
 public record Address
 {

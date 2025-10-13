@@ -4,12 +4,12 @@ using ECommerce.Shared.Core.Base;
 namespace ECommerce.Customers.Domain;
 
 public class Customer : EntityBase
-{    
+{
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }
-    public Address ShipTo { get; set; }
+    public Address ShippingAddress { get; set; }
     public IList<Provider> Providers { get; set; } = new List<Provider>();
 
     public void Create(string name, string email)
@@ -19,16 +19,14 @@ public class Customer : EntityBase
         CreatedAt = DateTime.UtcNow;
     }
 
-    public void Update(string name, string email)
+    public void Update(string name, string email, Address shippingAddress = null)
     {
         Name = name;
         Email = email;
-        UpdatedAt = DateTime.UtcNow;
-    }
 
-    public void AddOrUpdateAddress(Address address)
-    {
-        ShipTo = address;
+        if (shippingAddress is not null)
+            ShippingAddress = shippingAddress;
+
         UpdatedAt = DateTime.UtcNow;
     }
 
