@@ -5,7 +5,7 @@ using ECommerce.Shared.Infrastructure.RavenDB;
 
 namespace ECommerce.Customers.Commands;
 
-internal record UpdateCustomerCommand(string Id, string Name, string Email) : ICommand<Result<string>>;
+internal record UpdateCustomerCommand(string Id, string Name, string Email, string Phone) : ICommand<Result<string>>;
 
 internal class UpdateCustomerHandler(IRavenDocumentStoreHolder storeHolder) : ICommandHandler<UpdateCustomerCommand, Result<string>>
 {
@@ -22,7 +22,7 @@ internal class UpdateCustomerHandler(IRavenDocumentStoreHolder storeHolder) : IC
                 return Result.Failure<string>(Error.NotFound("UpdateCustomer", $"Customer with id '{command.Id}' was not found."));
             }
 
-            customer.Update(command.Name, command.Email);
+            customer.Update(command.Name, command.Email, command.Phone);
 
             await session.SaveChangesAsync(ct);
 

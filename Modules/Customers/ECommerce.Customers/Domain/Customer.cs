@@ -5,24 +5,36 @@ namespace ECommerce.Customers.Domain;
 
 public class Customer : EntityBase
 {
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime? UpdatedAt { get; set; }
-    public string Name { get; set; }
-    public string Email { get; set; }
-    public Address ShippingAddress { get; set; }
-    public IList<Provider> Providers { get; set; } = new List<Provider>();
+    public DateTime CreatedAt { get; private set; }
+    public DateTime? UpdatedAt { get; private set; }
+    public string Name { get; private set; }
+    public string Email { get; private set; }
+    public string Phone { get; private set; }
+    public Address ShippingAddress { get; private set; }
+    public IList<Provider> Providers { get; } = new List<Provider>();
 
-    public void Create(string name, string email)
+    public static Customer Create(string name, string email, string phone)
     {
-        Name = name;
-        Email = email;
-        CreatedAt = DateTime.UtcNow;
+        return new Customer
+        {
+            Name = name,
+            Email = email,
+            Phone = phone,
+            CreatedAt = DateTime.UtcNow
+        };
     }
 
-    public void Update(string name, string email, Address shippingAddress = null)
+    public void AddShippingAddress(Address address)
+    {
+        ShippingAddress = address;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void Update(string name, string email, string phone, Address shippingAddress = null)
     {
         Name = name;
         Email = email;
+        Phone = phone;
 
         if (shippingAddress is not null)
             ShippingAddress = shippingAddress;

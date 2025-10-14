@@ -10,7 +10,7 @@ namespace ECommerce.Customers.Endpoints;
 
 public class UpdateCustomer : IEndpoint
 {
-    internal record Request(string Id, string Name, string Email);
+    internal record Request(string Id, string Name, string Email, string Phone);
 
     public void MapEndpoint(IEndpointRouteBuilder builder)
     {
@@ -18,7 +18,7 @@ public class UpdateCustomer : IEndpoint
         {
             try
             {
-                var command = new UpdateCustomerCommand(id, request.Name, request.Email);
+                var command = new UpdateCustomerCommand(id, request.Name, request.Email, request.Phone);
 
                 var result = await dispatcher.Send(command, ct);
 

@@ -4,14 +4,13 @@ using ECommerce.Shared.Infrastructure.CQRS;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
 namespace ECommerce.Customers.Endpoints;
 
 public class CreateCustomer : IEndpoint
 {
-    internal record Request(string Name, string Email);
+    internal record Request(string Name, string Email, string Phone);
 
     public void MapEndpoint(IEndpointRouteBuilder builder)
     {
@@ -19,7 +18,7 @@ public class CreateCustomer : IEndpoint
         {
             try
             {
-                var command = new CreateCustomerCommand(request.Name, request.Email);
+                var command = new CreateCustomerCommand(request.Name, request.Email, request.Phone);
 
                 var result = await dispatcher.Send(command, ct);
 
