@@ -7,7 +7,7 @@ namespace ECommerce.Customers.Commands;
 
 internal record CreateCustomerCommand(string Name, string Email, string Phone) : IQuery<Result<string>>;
 
-internal class AddCustomerHandler(IRavenDocumentStoreHolder storeHolder) : IQueryHandler<CreateCustomerCommand, Result<string>>
+internal class CreateCustomerHandler(IRavenDocumentStoreHolder storeHolder) : IQueryHandler<CreateCustomerCommand, Result<string>>
 {
     public async Task<Result<string>> Handle(CreateCustomerCommand command, CancellationToken ct = default)
     {
